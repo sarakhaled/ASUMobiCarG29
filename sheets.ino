@@ -14,7 +14,7 @@ for(int index=0;index<=8;index++){
 void loop() {
   for(int in=0;in<=8;in++){
     digitalWrite(led,HIGH);
-value=digitalRead(dipswitch[in]);
+value+=digitalRead(dipswitch[in]);
 delay(4*value);
     digitalWrite(led,LOW);
     }
