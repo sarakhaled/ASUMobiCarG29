@@ -1,0 +1,27 @@
+ WHAT IS ARDUINO
+
+
+Arduino is an open-source platform used for building electronics projects. Arduino consists of both a physical programmable circuit board (often referred to as a microcontroller) and a piece of software, or IDE (Integrated Development Environment) that runs on your computer, used to write and upload computer code to the physical board.
+The Arduino platform has become quite popular with people just starting out with electronics, and for good reason. Unlike most previous programmable circuit boards, the Arduino does not need a separate piece of hardware (called a programmer) in order to load new code onto the board – you can simply use a USB cable. Additionally, the Arduino IDE uses a simplified version of C++, making it easier to learn to program. Finally, Arduino provides a standard form factor that breaks out the functions of the micro-controller into a more accessible package.
+
+TYPE OF ARDUINO
+Arduino Uno (R3)
+ It has 14 digital input/output pins (of which 6 can be used as PWM outputs), 6 analog inputs, a USB connection, a power jack, a reset button and more. It contains everything needed to support the microcontroller; simply connect it to a computer with a USB cable or power it with a AC-to-DC adapter or battery to get started.
+ 
+LilyPad Arduino
+This is LilyPad Arduino main board! LilyPad is a wearable e-textile technology developed by Leah Buechley and cooperatively designed by Leah and SparkFun. Each LilyPad was creatively designed with large connecting pads and a flat back to allow them to be sewn into clothing with conductive thread. The LilyPad also has its own family of input, output, power, and sensor boards that are also built specifically for e-textiles. They’re even washable!
+ 
+RedBoard
+
+The RedBoard can be programmed over a USB Mini-B cable using the Arduino IDE. It’ll work on Windows 8 without having to change your security settings (we used signed drivers, unlike the UNO). It’s more stable due to the USB/FTDI chip we used, plus it’s completely flat on the back, making it easier to embed in your projects. Just plug in the board, select “Arduino UNO” from the board menu and you’re ready to upload code. You can power the RedBoard over USB or through the barrel jack. The on-board power regulator can handle anything from 7 to 15VDC.
+ 
+Arduino Mega (R3)
+The Arduino Mega is like the UNO’s big brother. It has lots (54!) of digital input/output pins (14 can be used as PWM outputs), 16 analog inputs, a USB connection, a power jack, and a reset button. It contains everything needed to support the microcontroller; simply connect it to a computer with a USB cable or power it with a AC-to-DC adapter or battery to get started. The large number of pins make this board very handy for projects that require a bunch of digital inputs or outputs (like lots of LEDs or buttons).
+ 
+Arduino Leonardo
+The Leonardo is Arduino’s first development board to use one microcontroller with built-in USB. This means that it can be cheaper and simpler. Also, because the board is handling USB directly, code libraries are available which allow the board to emulate a computer keyboard, mouse, and more!
+ 
+
+ So, what's the difference between Arduino and microcontroller?
+Arduino contain microcontroller in it but  Arduino is made to help us use the microcontroller easily.as microcontroller only is very complected to  use .
+
