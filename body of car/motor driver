@@ -1,0 +1,9 @@
+ L298 is dual full-H driver.
+ in L298, a half H driver cannot be used independently, full H driver has to be used. 
+Output current per channel 2A for L298. Hence, the reason for heat sink in case of L298
+Protective Diodes against back EMF are provided internally in L293D but must be provided externally in L298/L293.
+L298 has two H-bridge drivers which means you can drive two motors simultaneously .
+Furthermore L298 is configured by default so you only have to change your bits and get it to work .
+In addition I would say you can even control 4 motors by connection 2 motors in parallel. 
+You can control all 4 independent lines according to your need/requirement .
+L298 operates up to 46V.
