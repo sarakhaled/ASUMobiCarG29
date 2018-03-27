@@ -11,10 +11,10 @@ int maximumRange = 55; // Maximum range needed
 int minimumRange = 0; // Minimum range needed
 long duration, distance; // Duration used to calculate distance
 
-int forward = 9; // forward pin
-int front = 10; // front pin
-int reverse = 11; // reverse pin
-int back = 12; // back pin
+int forward = 9; // forward  left motor
+int front = 10; // front right motor
+int reverse = 11; // back left motor
+int back = 12; // back right motor
 
 void setup() {
 Serial.begin (9600);
