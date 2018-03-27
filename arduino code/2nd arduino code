@@ -50,68 +50,78 @@ digitalWrite(back_right,LOW);
 }
 void go_right()
 {
-digitalWrite(forward,HIGH); // turn forward motor on
-digitalWrite(back,HIGH); // turn back motor on
-digitalWrite(reverse,LOW); // turn reverse motor off
-digitalWrite(front,LOW); // turn front motor off
+digitalWrite(front_left,HIGH); // turn forward motor on
+digitalWrite(front_right,LOW); // turn back motor on
+digitalWrite(back_left,HIGH); // turn reverse motor off
+digitalWrite(back_right,LOW); // turn front motor off
 }
 void go_Left()
 {
-digitalWrite(forward,LOW); // turn forward motor off
-digitalWrite(back,LOW); // turn back motor oFF
-digitalWrite(reverse,HIGH); // turn reverse motor on
-digitalWrite(front,HIGH); // turn front motor on
+digitalWrite(front_left,LOW); // turn forward motor off
+digitalWrite(front_right,HIGH); // turn back motor oFF
+digitalWrite(back_left,LOW); // turn reverse motor on
+digitalWrite(back_right,HIGH); // turn front motor on
 }
 // the loop() method runs over and over again,
 // as long as the Arduino has power
 
 void loop() {
+
+// The following trigPin/echoPin cycle is used to determine the
+// distance of the nearest object by bouncing soundwaves off of it.
+
+// digitalWrite(trigPin, LOW);
+// delayMicroseconds(2);
+
+if (Serial.available()>0)
+{
+  command=Serial.read();
+  stop_car();
+  switch(command)
+  {
+    case 'F':
+    go_forward();
+    break;
+    case 'B':
+    go_rvrs();
+    break;
+    case'L':
+    go_Left();
+    break;
+    case'R':
+    go_right();
+    break;
+  }
+}
+
 /*
-The following trigPin/echoPin cycle is used to determine the
-distance of the nearest object by bouncing soundwaves off of it.
-*/
-//digitalWrite(trigPin, LOW);
-delayMicroseconds(2);
-if (Serial.available()>0){
-command=Serial.read();
-stop_car();
-switch(command){
-case 'F':
-go_forward();
-break;
-case 'B':
-go_rvrs();
-break;
-case'L':
-go_Left();
-break;
-case'R':
-go_right();
-break;}
-}/*
 digitalWrite(trigPin, HIGH);
 delayMicroseconds(10);
 
 digitalWrite(trigPin, LOW);
 duration = pulseIn(echoPin, HIGH);
 
-//Calculate the distance (in cm) based on the speed of sound.
+Calculate the distance (in cm) based on the speed of sound.
 distance = duration/58.2;
 
-if (distance > maximumRange || distance < minimumRange){
-/* Send a positive number to computer and Turn MOTORS ON
+if (distance > maximumRange || distance < minimumRange)
+{
+Send a positive number to computer and Turn MOTORS ON
 to indicate "out of range"
 Serial.println("1"); // can be removed ?
 go_forward();
-
 }
-else {
+
+else 
+{
 go_rvrs();
 delay(250);
 go_right();
 delay(500);
-
 }
-//Delay 50ms before next reading.
+
+Delay 50ms before next reading.
 delay(50);
-*/}
+}
+*/
+}
