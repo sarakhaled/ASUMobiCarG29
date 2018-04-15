@@ -1,0 +1,118 @@
+char command;
+int trigPin =22 ;
+int echoPin =24 ;
+int maximumRange = 55; // Maximum range needed
+int minimumRange = 0; // Minimum range needed
+long duration, distance; // Duration used to calculate distance
+int front_left = 9;
+int back_left = 10;
+int front_right = 11;
+int back_right = 12;
+
+
+void setup() 
+{
+ Serial.begin (9600);
+ pinMode(trigPin, OUTPUT);
+ pinMode(echoPin, INPUT);
+ pinMode(front_left, OUTPUT);
+ pinMode(back_left, OUTPUT);
+ pinMode(front_right, OUTPUT);
+ pinMode(back_right, OUTPUT);
+}
+
+void go_forward()
+{
+digitalWrite(front_left,HIGH); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn front motor on
+digitalWrite(back_left,LOW); // turn reverse motor off
+digitalWrite(back_right,LOW); // turn back motor off
+}
+
+void go_rvrs()
+{
+digitalWrite(front_left,LOW); // turn forward motor off
+digitalWrite(front_right,LOW); // turn front motor off
+digitalWrite(back_left,HIGH); // turn reverse motor on
+digitalWrite(back_right,HIGH); // turn back motor on
+}
+
+void stop_car()
+{
+digitalWrite(front_left,LOW); // turn reverse motor off
+digitalWrite(front_right,LOW); // turn forward motor off
+digitalWrite(back_left,LOW);
+digitalWrite(back_right,LOW);
+}
+void go_Left()
+{
+digitalWrite(front_left,LOW); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn back motor on
+digitalWrite(back_left,LOW); // turn reverse motor off  
+digitalWrite(back_right,LOW); // turn front motor off
+}
+void go_right()
+{
+digitalWrite(front_left,HIGH); // turn forward motor off
+digitalWrite(front_right,LOW); // turn back motor oFF
+digitalWrite(back_left,LOW); // turn reverse motor on  
+digitalWrite(back_right,LOW); // turn front motor on
+}
+
+void loop ()
+{
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+
+if (Serial.available()>0)
+  {
+    command=Serial.read();
+    //stop_car();
+    switch(command)
+    {
+      case 'F':
+      go_forward();
+      break;
+      case 'B':
+      go_rvrs();
+      break;
+      case'L':
+      go_Left();
+      break;
+      case'R':
+      go_right();
+      break;
+    }
+  }
+
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10); 
+ 
+digitalWrite(trigPin, LOW);
+duration = pulseIn(echoPin, HIGH);
+ 
+ //Calculate the distance (in cm) based on the speed of sound.
+distance = duration/58.2;
+ 
+ 
+
+if (distance > maximumRange || distance < minimumRange)
+{
+ /* Send a positive number to computer and Turn MOTORS ON 
+ to indicate "out of range" */
+ Serial.println("1"); // can be removed ?
+ go_forward();
+}
+
+ else 
+{
+  go_rvrs();
+  delay(250);
+  go_right();
+  delay(500);
+ }
+ //Delay 50ms before next reading.
+ delay(50);
+
+
+}
