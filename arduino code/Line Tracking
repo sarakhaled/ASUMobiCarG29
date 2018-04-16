@@ -1,0 +1,137 @@
+int front_left = 9;
+int back_left = 10;
+int front_right = 11;
+int back_right = 12;
+char command;
+const int trigPin = 13; // 6
+const int echoPin = 8; // 5
+const int enable1=5;
+const int enable2=6;
+long duration;
+int distance;
+float MinimumDistance;
+int vcc=A1;
+int gnd =A0;
+const int pinL=2;
+const int pinC=3;
+const int pinR=4;
+int LState ;
+int CState ;
+int RState ;
+int LastState;
+
+void setup() {
+ Serial.begin (9600);
+ pinMode(enable1,OUTPUT);
+ pinMode(enable2,OUTPUT);
+ pinMode(trigPin, OUTPUT);
+ pinMode(echoPin, INPUT);
+ pinMode(front_left, OUTPUT);
+ pinMode(back_left, OUTPUT);
+ pinMode(front_right, OUTPUT);
+ pinMode(back_right, OUTPUT);
+ pinMode(pinL, INPUT);
+ pinMode(pinC, INPUT);
+ pinMode(pinR, INPUT);
+ analogWrite(enable1,70);
+ analogWrite(enable2,70);
+ //pinMode(vcc, OUTPUT);
+ //pinMode(gnd, OUTPUT);
+ LastState=0;
+}
+void go_forward()
+{
+digitalWrite(front_left,HIGH); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn front motor on
+digitalWrite(back_left,LOW); // turn reverse motor off
+digitalWrite(back_right,LOW); // turn back motor off
+
+}
+
+
+void go_rvrs()
+{
+digitalWrite(front_left,LOW); // turn forward motor off
+digitalWrite(front_right,LOW); // turn front motor off
+digitalWrite(back_left,HIGH); // turn reverse motor on
+digitalWrite(back_right,HIGH); // turn back motor on
+
+}
+
+void stop_car()
+{
+digitalWrite(front_left,LOW); // turn reverse motor off
+digitalWrite(front_right,LOW); // turn forward motor off
+digitalWrite(back_left,LOW);
+digitalWrite(back_right,LOW);
+}
+void go_right()
+{
+digitalWrite(front_left,LOW); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn back motor on
+digitalWrite(back_left,LOW); // turn reverse motor off  
+digitalWrite(back_right,LOW); // turn front motor off
+
+}
+void go_left()
+{
+digitalWrite(front_left,HIGH); // turn forward motor off
+digitalWrite(front_right,HIGH); // turn back motor oFF
+digitalWrite(back_left,LOW); // turn reverse motor on  
+digitalWrite(back_right,HIGH); // turn front motor on
+}
+void go_right2()
+{
+digitalWrite(front_left,LOW); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn back motor on
+digitalWrite(back_left,HIGH); // turn reverse motor off  
+digitalWrite(back_right,LOW); // turn front motor off
+}
+void go_left2()
+{
+digitalWrite(front_left,HIGH); // turn forward motor off
+digitalWrite(front_right,LOW); // turn back motor oFF
+digitalWrite(back_left,LOW); // turn reverse motor on  
+digitalWrite(back_right,HIGH); // turn front motor on
+
+}
+
+void loop()
+{
+  
+  LState = digitalRead(pinL);
+  CState = digitalRead(pinC);
+  RState = digitalRead(pinR);
+
+
+if(((CState==HIGH)&&(RState==LOW)&&(LState==LOW))||((LState==HIGH)&&(RState==HIGH)&&(CState==HIGH)))
+ {
+  go_forward();
+  //delay(80);
+  //stop_car();
+  LastState=1;
+  Serial.println("FORWARD");
+ }
+ 
+ if(((LState==HIGH)&&(CState==LOW)&&(RState==LOW))||(LState==HIGH&&CState==HIGH&&RState==LOW))
+ {
+    go_left();
+  //delay(80);
+  //stop_car();
+  LastState=3;
+  Serial.println("LEFT");
+ }
+
+if(((RState==HIGH)&&(CState==LOW)&&(LState==LOW))||((RState==HIGH&&CState==HIGH&&LState==LOW)))
+ {
+   go_right();
+  //delay(80);
+  //stop_car();
+  LastState=2;
+  Serial.println("RIGHT");
+ }
+ else 
+ Serial.println("NOTHING");
+
+
+}
