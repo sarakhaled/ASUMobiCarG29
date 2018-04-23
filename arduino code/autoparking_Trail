@@ -1,0 +1,159 @@
+int trigPin =22 ;
+int echoPin =24 ;
+int trigpin_Left=21;
+int echopin_Right=22;
+int echopin_Left=23;
+int trigpin_Back=24;
+int echopin_Back=25;
+int front_left = 9;
+int back_left = 10;
+int front_right = 11;
+int back_right = 12;
+long duration_Left;
+long duration_Right;
+long distance_Left;
+long distance_Right;
+long duration_Back;
+long distance_Back;
+int maxrange_Left=7,maxrange_Back=15;
+int vr_x=0;
+int vr_y=0;
+int vr_count=0;
+void go_forward()
+{
+digitalWrite(front_left,HIGH); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn front motor on
+digitalWrite(back_left,LOW); // turn reverse motor off
+digitalWrite(back_right,LOW); // turn back motor off
+
+}
+void go_Left()
+{
+digitalWrite(front_left,HIGH); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn back motor on
+digitalWrite(back_left,LOW); // turn reverse motor off 
+digitalWrite(back_right,HIGH); // turn front motor off
+}
+void go_right()
+{
+digitalWrite(front_left,LOW); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn back motor on
+digitalWrite(back_left,LOW); // turn reverse motor off 
+digitalWrite(back_right,LOW); // turn front motor off
+}
+void backwrd_Right()
+{
+digitalWrite(front_left,LOW); // turn forward motor off
+digitalWrite(front_right,LOW); // turn front motor off
+digitalWrite(back_left,LOW); // turn reverse motor oFF
+digitalWrite(back_right,HIGH); // turn back motor on
+}
+void backward_Left()
+{
+digitalWrite(front_left,LOW); // turn forward motor off
+digitalWrite(front_right,LOW); // turn front motor off
+digitalWrite(back_left,HIGH); // turn reverse motor on
+digitalWrite(back_right,LOW); // turn back motor off
+
+}
+
+void stop_car()
+{
+digitalWrite(front_left,LOW); // turn reverse motor off
+digitalWrite(front_right,LOW); // turn forward motor off
+digitalWrite(back_left,LOW);
+digitalWrite(back_right,LOW);
+}
+long forward_distance(int echopin){
+long dur= pulseIn(echopin, HIGH);
+long stop_distance=dur/58.2;
+return stop_distance;
+}
+void go_rvrs()
+{
+digitalWrite(front_left,LOW); // turn forward motor off
+digitalWrite(front_right,LOW); // turn front motor off
+digitalWrite(back_left,HIGH); // turn reverse motor on
+digitalWrite(back_right,HIGH); // turn back motor on
+}
+
+void setup() {
+Serial.begin (9600);
+pinMode(trigpin_Right, OUTPUT);
+pinMode(trigpin_Left, OUTPUT);
+pinMode(echopin_Right, INPUT);
+pinMode(echopin_Left, INPUT);
+pinMode(echopin_Back, INPUT);
+pinMode(trigpin_Back, OUTPUT);
+pinMode(front_left, OUTPUT);
+pinMode(back_left, OUTPUT);
+pinMode(front_right, OUTPUT);
+pinMode(back_right, OUTPUT);
+}
+
+void loop() 
+{
+duration_Left= pulseIn(echopin_Left, HIGH);
+distance_Left=duration_Left/58.2;
+if(distance_Left<vr_x||distance_Left>maxrange_Left)
+{
+vr_count++;
+go_forward();
+distance_Left=0;
+}
+if(vr_count!=0)
+{
+  if(distance_Left<vr_x||distance_Left>maxrange_Left)
+  {
+  stop_car();
+  backward_Left();
+  go_rvrs();
+  
+  duration_Back=pulseIn(echopin_Back, HIGH);
+  distance_Back=duration_Back/58.2;
+  if(distance_Back<=maxrange_Back)
+    {
+      stop_car();
+      go_Left();
+      go_forward();
+      long stop_dis=forward_distance(echoPin);
+      if(stop_dis<=15)
+      {
+        stop_car();
+      } 
+    }
+  }
+}
+duration_Right= pulseIn(echopin_Right, HIGH);
+distance_Right=duration_Right/58.2;
+vr_count=0;
+if(distance_Right<vr_y||distance_Right>maxrange_Left)
+{
+  vr_count++;
+  go_forward();
+  distance_Right=0;
+}
+if(vr_count!=0)
+{
+  if(distance_Right<vr_y||distance_Right>maxrange_Left)
+  {
+    stop_car();
+    backwrd_Right();
+    go_rvrs();
+    duration_Back=pulseIn(echopin_Right, HIGH);
+    distance_Back=duration_Back/58.2;
+    if(distance_Back<=maxrange_Back)
+    {
+      stop_car();
+      go_right();
+      go_forward();
+      long stop_dis=forward_distance(echoPin);
+      if(stop_dis<=15)
+      {
+        stop_car();
+      }
+    distance_Right=0; 
+    }
+  }
+}
+}
