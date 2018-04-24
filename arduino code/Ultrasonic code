@@ -1,17 +1,21 @@
-char command;
-int trigPin =22 ;
-int echoPin =24 ;
-int maximumRange = 55; // Maximum range needed
-int minimumRange = 0; // Minimum range needed
-long duration, distance; // Duration used to calculate distance
 int front_left = 9;
 int back_left = 10;
 int front_right = 11;
 int back_right = 12;
+char command;
+const int trigPin = 6;
+const int echoPin = 5;
+long duration;
+int distance;
+float MinimumDistance;
+int vcc=A1;
+int gnd =A0;
+//int s1;
+//int s2 ;
+//int s3 ;
 
 
-void setup() 
-{
+void setup() {
  Serial.begin (9600);
  pinMode(trigPin, OUTPUT);
  pinMode(echoPin, INPUT);
@@ -19,6 +23,25 @@ void setup()
  pinMode(back_left, OUTPUT);
  pinMode(front_right, OUTPUT);
  pinMode(back_right, OUTPUT);
+ //pinMode(vcc, OUTPUT);
+ //pinMode(gnd, OUTPUT);
+}
+float ultrasonic(){
+  // Clears the trigPin
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration = pulseIn(echoPin, HIGH);
+// Calculating the distance
+distance= duration*0.034/2;
+// Prints the distance on the Serial Monitor
+//Serial.print("Distance: ");
+//Serial.println(distance);
+return distance; 
 }
 
 void go_forward()
@@ -48,7 +71,7 @@ void go_Left()
 {
 digitalWrite(front_left,LOW); // turn forward motor on
 digitalWrite(front_right,HIGH); // turn back motor on
-digitalWrite(back_left,LOW); // turn reverse motor off  
+digitalWrite(back_left,HIGH); // turn reverse motor off  
 digitalWrite(back_right,LOW); // turn front motor off
 }
 void go_right()
@@ -56,63 +79,80 @@ void go_right()
 digitalWrite(front_left,HIGH); // turn forward motor off
 digitalWrite(front_right,LOW); // turn back motor oFF
 digitalWrite(back_left,LOW); // turn reverse motor on  
-digitalWrite(back_right,LOW); // turn front motor on
+digitalWrite(back_right,HIGH); // turn front motor on
 }
+
 
 void loop ()
 {
-digitalWrite(trigPin, LOW);
-delayMicroseconds(2);
-
+  // s1=digitalRead(7);
+// s2=digitalRead(6); 
+// s3=digitalRead(5);
+digitalWrite(vcc,HIGH);
+digitalWrite(gnd,HIGH);
 if (Serial.available()>0)
-  {
-    command=Serial.read();
-    //stop_car();
-    switch(command)
-    {
-      case 'F':
-      go_forward();
-      break;
-      case 'B':
-      go_rvrs();
-      break;
-      case'L':
-      go_Left();
-      break;
-      case'R':
-      go_right();
-      break;
-    }
-  }
-
-digitalWrite(trigPin, HIGH);
-delayMicroseconds(10); 
- 
-digitalWrite(trigPin, LOW);
-duration = pulseIn(echoPin, HIGH);
- 
- //Calculate the distance (in cm) based on the speed of sound.
-distance = duration/58.2;
- 
- 
-
-if (distance > maximumRange || distance < minimumRange)
 {
- /* Send a positive number to computer and Turn MOTORS ON 
- to indicate "out of range" */
- Serial.println("1"); // can be removed ?
- go_forward();
+command=Serial.read();
+
+
+ MinimumDistance =0;
+   
+
+
+switch(command)
+{
+ 
+ case 'B':
+  go_rvrs();
+ break;
+ 
+ case 'F':
+  
+  go_forward();
+  MinimumDistance =  ultrasonic();
+  if (  MinimumDistance <  30)
+
+ stop_car();
+ break;
+  
+ 
+
+ case 'L':
+go_Left();
+
+
+MinimumDistance =  ultrasonic();
+if (  MinimumDistance <  30)
+{
+ stop_car();
+  
+} 
+break;
+
+
+ case 'R':
+ MinimumDistance =  ultrasonic();
+if ( MinimumDistance <  30)
+{
+ stop_car();
+  
 }
 
- else 
-{
-  go_rvrs();
-  delay(250);
-  go_right();
-  delay(500);
- }
- //Delay 50ms before next reading.
- delay(50);
+ go_right();
+  
+
+break;
+   
 
 
+ case 'S':
+
+stop_car();
+  
+ break;
+
+}
+
+
+}
 }
