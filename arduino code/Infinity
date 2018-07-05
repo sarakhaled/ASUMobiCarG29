@@ -1,0 +1,16 @@
+void infinity()
+{
+  go_forward();
+  delay(800);
+  go_left2();
+  delay(700);//1400
+  go_forward();
+  delay(800);
+  go_right2();
+  delay(700);//1400
+  //go_forward();
+  //delay(800);
+  stop_car();
+  //go_forward();
+  //delay(1500);
+}
