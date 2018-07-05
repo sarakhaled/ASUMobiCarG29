@@ -1,0 +1,12 @@
+void Circle ()
+{
+  //go_forward(); // Speed control
+  //delay(500);
+  
+  analogWrite (enable1, 255);
+  analogWrite (enable2, 60);
+  delay(200);
+  go_forward();
+  delay(1810);
+  //delay
+}
