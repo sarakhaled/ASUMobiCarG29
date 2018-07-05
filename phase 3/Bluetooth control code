@@ -1,0 +1,169 @@
+if (Serial.available()>0)
+{
+command=Serial.read();
+}
+
+if(command == 'w')
+{ 
+LState = digitalRead(pinL);
+CState = digitalRead(pinC);
+RState = digitalRead(pinR);
+
+if(((CState==HIGH)&&(RState==LOW)&&(LState==LOW))||((LState==HIGH)&&(RState==HIGH)&&(CState==HIGH)))
+{
+go_forward();
+//delay(80);
+//stop_car();
+Serial.println("FORWAAAAHHAAARD");
+}
+
+if(((LState==HIGH)&&(CState==LOW)&&(RState==LOW))||(LState==HIGH&&CState==HIGH&&RState==LOW))
+{
+go_left();
+//delay(80);
+//stop_car();
+Serial.println("LEFT");
+}
+
+if(((RState==HIGH)&&(CState==LOW)&&(LState==LOW))||((RState==HIGH&&CState==HIGH&&LState==LOW)))
+{
+go_right();
+//delay(80);
+//stop_car();
+Serial.println("RIGHT");
+}
+else 
+Serial.println("WALA 7AGAAA");
+//command="";
+}
+
+MinimumDistance = ultrasonic();
+Serial.print( MinimumDistance);
+
+switch(command)
+{ 
+case 'B':
+go_rvrs(); 
+break;
+
+case 'F':
+Serial.println("Da5al gowa el forward");
+go_forward();
+// if (MinimumDistance < 30)
+// stop_car();
+break;
+
+case 'L':
+go_left();
+break;
+
+case 'R':
+go_right();
+break;
+
+case 'S':
+stop_car();
+break;
+}
+
+if(command=='D')
+{ 
+data="";
+com2=0;
+while(1)
+{
+if (Serial.available()>0)
+{
+
+value=Serial.read();
+
+if(isDigit(value))
+{
+data = data + value;
+com2=data.toInt();
+}
+else if(value == ';') 
+break;
+} 
+Distance(com2);
+}
+Serial.print("com2=");
+Serial.print(com2);
+goto C;
+
+
+//command="";
+}
+
+if(command=='b')
+{ 
+data="";
+com2=0;
+while(1)
+{
+if (Serial.available()>0)
+{ 
+value=Serial.read();
+
+if (isDigit(value))
+{ 
+data = data + value;
+com2=data.toInt();
+}
+else if(value == ';') 
+break;
+Distance_rvrs(com2);
+}
+//command="";
+}
+}
+
+if(command=='A')
+{ data="";
+com2=0;
+while(1)
+{
+if (Serial.available()>0)
+{ 
+value=Serial.read();
+
+// Serial.println ("value = ");
+//Serial.println (value);
+if (isDigit(value))
+{
+data = data + value;
+Serial.println ("data = ");
+//Serial.println (data);
+com2=data.toInt();
+} 
+else if(value == ';') 
+break;
+}
+}
+angle(com2);
+goto C;
+//Serial.println ("El bytbe3et = ");
+//Serial.println (com2);
+//command="";
+}
+
+if(command=='Z')
+{
+infinity();
+stop_car();
+delay(2000);
+
+Rectangle();
+stop_car();
+delay(2000);
+
+Circle();
+stop_car();
+delay(2000);
+
+}
+Serial.println(command);
+delay (1000);
+// command="";
+
+}
