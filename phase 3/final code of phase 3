@@ -243,4 +243,150 @@ delay(600); // to change position by 90 degrees
 
 go_forward();
 delay(500);
-stop_car
+stop_car();
+delay(500);
+go_left();
+delay(600); // to change position by 90 degrees
+
+go_forward();
+delay(500);
+stop_car();
+delay(500);
+go_left();
+delay(600);
+
+go_forward();
+delay(1000);
+stop_car();
+delay(500); // GOOD
+go_left();
+delay(600); // to change position by 90 degrees
+
+go_forward();
+delay(500);
+stop_car();
+delay(500); // GOOD
+go_left();
+delay(500);
+
+}
+int com2;
+char value;
+String data = "" ;
+
+
+void loop()
+{
+delay(10);
+analogWrite(enable1,120);
+analogWrite(enable2,120);
+
+if (Serial.available()>0)
+{
+command=Serial.read();
+//Serial.print(command);
+}
+
+if(command == 'W')
+{ 
+Serial.print('W');
+analogWrite(enable1,70);
+analogWrite(enable2,70);
+Serial.print(enable1);
+LState = digitalRead(pinL);
+CState = digitalRead(pinC);
+RState = digitalRead(pinR);
+
+if(((CState==HIGH)&&(RState==LOW)&&(LState==LOW))||((LState==HIGH)&&(RState==HIGH)&&(CState==HIGH)))
+{
+go_forward();
+//delay(80);
+//stop_car();
+//Serial.println("FORWAAAAHHAAARD");
+}
+
+if(((LState==HIGH)&&(CState==LOW)&&(RState==LOW))||(LState==HIGH&&CState==HIGH&&RState==LOW))
+{
+go_left();
+//delay(80);
+//stop_car();
+//Serial.println("LEFT");
+}
+
+if(((RState==HIGH)&&(CState==LOW)&&(LState==LOW))||((RState==HIGH&&CState==HIGH&&LState==LOW)))
+{
+go_right();
+//delay(80);
+//stop_car();
+//Serial.println("RIGHT");
+}
+//else 
+//Serial.println("WALA 7AGAAA");
+//command="";
+}
+
+MinimumDistance = ultrasonic();
+//Serial.println( "MinimumDistance fo2 = ");
+//Serial.println( MinimumDistance);
+
+switch(command)
+{ 
+case 'B':
+go_rvrs(); 
+break;
+
+case 'F':
+//Serial.println("Da5al gowa el forward");
+go_forward();
+//Serial.println( "elle ta7t");
+//Serial.println( MinimumDistance);
+
+if (MinimumDistance < 30)
+{
+stop_car();
+//Serial.println("STOOOOPPP");
+}
+break;
+
+case 'L':
+go_left();
+break;
+
+case 'R':
+go_right();
+break;
+
+case 'S':
+stop_car();
+break;
+}
+
+if(command=='D')
+{ 
+data="";
+com2=0;
+while(1)
+{
+if (Serial.available()>0)
+{
+
+value=Serial.read();
+
+if(isDigit(value))
+{
+data = data + value;
+com2=data.toInt();
+}
+else if(value == ';') 
+break;
+} 
+Distance(com2);
+}
+//Serial.print("com2=");
+//Serial.print(com2);
+goto C;
+
+
+//command="";
+}
+
