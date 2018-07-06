@@ -244,27 +244,6 @@ delay(600); // to change position by 90 degrees
 go_forward();
 delay(500);
 stop_car();
-delay(500);
-go_left();
-delay(600); // to change position by 90 degrees
-
-go_forward();
-delay(500);
-stop_car();
-delay(500);
-go_left();
-delay(600);
-
-go_forward();
-delay(1000);
-stop_car();
-delay(500); // GOOD
-go_left();
-delay(600); // to change position by 90 degrees
-
-go_forward();
-delay(500);
-stop_car();
 delay(500); // GOOD
 go_left();
 delay(500);
