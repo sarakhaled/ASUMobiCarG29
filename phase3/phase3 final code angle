@@ -1,0 +1,185 @@
+#include <Wire.h>
+float ConDistance;
+float VarDistance;
+float ConAngle;
+float VarAngle;
+int front_left = 9;
+int back_left = 10;
+int front_right = 11;
+int back_right = 12;
+char command;
+const int trigPin = 13; // 6
+const int echoPin = 8; // 5
+const int enable1=5;
+const int enable2=6;
+long duration;
+int distance;
+float MinimumDistance=0; // edited
+int vcc=A1;
+int gnd =A0;
+const int pinL=2;
+const int pinC=3;
+const int pinR=4;
+int LState ;
+int CState ;
+int RState ;
+
+void setup() {
+Serial.begin (9600);
+pinMode(enable1,OUTPUT);
+pinMode(enable2,OUTPUT);
+pinMode(trigPin, OUTPUT);
+pinMode(echoPin, INPUT);
+pinMode(front_left, OUTPUT);
+pinMode(back_left, OUTPUT);
+pinMode(front_right, OUTPUT);
+pinMode(back_right, OUTPUT);
+pinMode(pinL, INPUT);
+pinMode(pinC, INPUT);
+pinMode(pinR, INPUT);
+analogWrite(enable1,120);
+analogWrite(enable2,120);
+//pinMode(vcc, OUTPUT);
+//pinMode(gnd, OUTPUT);
+}
+void go_forward()
+{
+digitalWrite(front_left,HIGH); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn front motor on
+digitalWrite(back_left,LOW); // turn reverse motor off
+digitalWrite(back_right,LOW); // turn back motor off
+}
+
+void go_rvrs()
+{
+digitalWrite(front_left,LOW); // turn forward motor off
+digitalWrite(front_right,LOW); // turn front motor off
+digitalWrite(back_left,HIGH); // turn reverse motor on
+digitalWrite(back_right,HIGH); // turn back motor on
+}
+
+void stop_car()
+{
+digitalWrite(front_left,LOW); // turn reverse motor off
+digitalWrite(front_right,LOW); // turn forward motor off
+digitalWrite(back_left,LOW);
+digitalWrite(back_right,LOW);
+}
+
+void go_right()
+{
+digitalWrite(front_left,LOW); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn back motor on
+digitalWrite(back_left,LOW); // turn reverse motor off 
+digitalWrite(back_right,LOW); // turn front motor off
+}
+void go_right1()
+{
+digitalWrite(front_left,LOW); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn back motor on
+digitalWrite(back_left,HIGH); // turn reverse motor off 
+digitalWrite(back_right,LOW); // turn front motor off
+analogWrite(enable1,90);
+analogWrite(enable2,70);}
+
+void go_left()
+{
+digitalWrite(front_left,HIGH); // turn forward motor off
+digitalWrite(front_right,HIGH); // turn back motor oFF
+digitalWrite(back_left,LOW); // turn reverse motor on 
+digitalWrite(back_right,HIGH); // turn front motor on
+}
+
+void go_right2() // go forward right
+{
+digitalWrite(front_left,LOW); // turn forward motor on
+digitalWrite(front_right,HIGH); // turn back motor on
+digitalWrite(back_left,HIGH); // turn reverse motor off 
+digitalWrite(back_right,LOW); // turn front motor off
+}
+
+void go_left2() // go forward left
+{
+digitalWrite(front_left,HIGH); // turn forward motor off
+digitalWrite(front_right,LOW); // turn back motor oFF
+digitalWrite(back_left,LOW); // turn reverse motor on 
+digitalWrite(back_right,HIGH); // turn front motor on
+}
+void angle(float ConAngle)
+{
+/* int time ;
+VarAngle=0; 
+while ( VarAngle < ConAngle)
+{go_right1();
+time =millis();
+VarAngle= time*0.06;*/
+for( int i =0 ; i< ConAngle ; i++)
+{
+go_right1();
+delay(9);
+Serial.println( "Conangle = " );
+Serial.println( ConAngle);
+}
+stop_car();
+// ConAngle=0;
+
+/*
+* for(int i =0 ; i<ConAngle ; i =i++)
+* {
+* go_right1();
+* delay(16);
+* 
+* }
+* stop_car();
+* 
+*/
+}
+
+int com2;
+char value;
+String data = "" ;
+
+
+void loop()
+{
+delay(10);
+analogWrite(enable1,120);
+analogWrite(enable2,120);
+
+if (Serial.available()>0)
+{
+command=Serial.read();
+//Serial.print(command);
+}
+if(command=='A')
+{ data="";
+com2=0;
+while(1)
+{
+if (Serial.available()>0)
+{ 
+value=Serial.read();
+
+// Serial.println ("value = ");
+//Serial.println (value);
+if (isDigit(value))
+{
+data = data + value;
+//Serial.println ("data = ");
+//Serial.println (data);
+com2=data.toInt();
+} 
+else if(value == ';') 
+break;
+}
+}
+angle(com2);
+goto C;
+//Serial.println ("El bytbe3et = ");
+//Serial.println (com2);
+//command="";
+}
+
+
+
+}
