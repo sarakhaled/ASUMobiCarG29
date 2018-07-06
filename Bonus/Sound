@@ -76,4 +76,46 @@ digitalWrite(back_right,HIGH); // turn front motor on
       char c = BT.read(); //Conduct a serial read
       readvoice += c; //build the string- "forward", "reverse", "left" and "right" 
     
-
+if (readvoice.length() > 0) 
+      { 
+        Serial.println(readvoice); 
+        if(readvoice == "*forward#")
+        {
+          go_forward();
+          delay(1000);
+           readvoice= "" ;
+        }
+          else if(readvoice == "*back#") 
+          { 
+            go_rvrs(); 
+            delay(1000); 
+             readvoice= "" ;
+          } 
+          else if (readvoice == "*left#") 
+          { 
+            go_left();
+            //delay (800); 
+            //go_forward(); 
+            delay(1000);
+            readvoice= "" ;
+           } 
+           else if ( readvoice == "*right#") 
+           { 
+            go_right();
+            //delay (800); 
+            //go_forward();
+            delay(1000); 
+             readvoice= "" ;
+            } 
+            else if (readvoice == "*stop#") 
+            {
+              stop_car();
+              delay (1000); 
+               readvoice= "" ;
+             }  
+             
+      }
+      //readvoice= "" ;
+    
+    }
+  }
