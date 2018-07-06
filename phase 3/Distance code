@@ -132,7 +132,7 @@ time =0;*/
   for( int i =0 ; i< ConDistance ; i++)
   {
   go_forward();
-  delay(40);
+  delay(16);
 Serial.println( i);
   
   }
