@@ -1,0 +1,28 @@
+#include <SoftwareSerial.h> 
+SoftwareSerial BT(0, 1); //TX, RX respetively
+String readvoice;
+
+
+int front_left = 9;
+int back_left = 10;
+int front_right = 11;
+int back_right = 12;
+const int enable1=5;
+const int enable2=6;
+char command;
+
+void setup() 
+{
+  BT.begin(9600); 
+  Serial.begin(9600);
+  pinMode(front_left, OUTPUT);
+  pinMode(back_left, OUTPUT);
+  pinMode(front_right, OUTPUT);
+  pinMode(back_right, OUTPUT);
+  pinMode(enable1,OUTPUT);
+  pinMode(enable2,OUTPUT);
+  analogWrite(enable1,70);
+  analogWrite(enable2,70);
+
+  pinMode(LED, OUTPUT);
+  }
