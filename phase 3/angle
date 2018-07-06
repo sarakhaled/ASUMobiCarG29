@@ -1,8 +1,6 @@
 #include <Wire.h>
 float ConDistance;
 float VarDistance;
-float ConAngle;
-float VarAngle;
 int front_left = 9;
 int back_left = 10;
 int front_right = 11;
@@ -170,90 +168,10 @@ void loop()
   {
     command=Serial.read();
   }
- if(command == 'w')
-  { 
-    LState = digitalRead(pinL);
-    CState = digitalRead(pinC);
-    RState = digitalRead(pinR);
-
-    if(((CState==HIGH)&&(RState==LOW)&&(LState==LOW))||((LState==HIGH)&&(RState==HIGH)&&(CState==HIGH)))
-    {
-      go_forward();
-      //delay(80);
-      //stop_car();
-      Serial.println("FORWAAAAHHAAARD");
-    }
  
-    if(((LState==HIGH)&&(CState==LOW)&&(RState==LOW))||(LState==HIGH&&CState==HIGH&&RState==LOW))
-    {
-      go_left();
-      //delay(80);
-      //stop_car();
-      Serial.println("LEFT");
-    }
-
-    if(((RState==HIGH)&&(CState==LOW)&&(LState==LOW))||((RState==HIGH&&CState==HIGH&&LState==LOW)))
-    {
-      go_right();
-      //delay(80);
-      //stop_car();
-      Serial.println("RIGHT");
-    }
-    else 
-      Serial.println("WALA 7AGAAA");
-
-  }
-
-  MinimumDistance = ultrasonic();
-//  Serial.print(  MinimumDistance  );
-
-
-  
-    switch(command)
-    { 
-      case 'B':
-      go_rvrs();
-      break;
- 
-      case 'F':
-      go_forward();
-       
-       if (  MinimumDistance <  30)
-        stop_car();
-      break;
-
-      case 'L':
-         go_left();
-         
-      break;
-
-      case 'R':
-      go_right();
-      break;
-
-      case 'S':
-      stop_car();
-      break;
-    }
-
-
- /* ConDistance=40;
 
  
-  while ( VarDistance <ConDistance)
-{go_forward();
- int time =millis();
-  VarDistance= time*0.04;
-  Serial.println( VarDistance);
-  /*ConAngle = 90;
-while ( VarAngle < ConAngle)
-{go_right1();
- int time =millis();
-  VarAngle= time*0.06;
-  Serial.println( VarAngle);
-  
- 
-}*/
+
 // go_forward();
  //delay(1500);
  
@@ -262,3 +180,6 @@ Distance(100);
 
 
 }
+
+ 
+
