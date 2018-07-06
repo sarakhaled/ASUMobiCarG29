@@ -107,35 +107,17 @@ digitalWrite(back_right,HIGH); // turn front motor on
 }
 void angle(float ConAngle)
 {
-/* int time ;
-VarAngle=0; 
-while ( VarAngle < ConAngle)
-{go_right1();
-time =millis();
-VarAngle= time*0.06;*/
-for( int i =0 ; i< ConAngle ; i++)
-{
-go_right1();
-delay(9);
-Serial.println( "Conangle = " );
-Serial.println( ConAngle);
+ for( int i =0 ; i< ConAngle ; i++)
+ {
+ go_right1();
+ delay(9);
+ Serial.println( "Conangle = " );
+ Serial.println( ConAngle);
 }
 stop_car();
-// ConAngle=0;
 
-/*
-* for(int i =0 ; i<ConAngle ; i =i++)
-* {
-* go_right1();
-* delay(16);
-* 
-* }
-* stop_car();
-* 
-*/
 }
-
-int com2;
+int com2; 
 char value;
 String data = "" ;
 
