@@ -389,4 +389,75 @@ goto C;
 
 //command="";
 }
+if(command=='b')
+{ 
+data="";
+com2=0;
+while(1)
+{
+if (Serial.available()>0)
+{ 
+value=Serial.read();
 
+if (isDigit(value))
+{ 
+data = data + value;
+com2=data.toInt();
+}
+else if(value == ';') 
+break;
+Distance_rvrs(com2);
+}
+//command="";
+}
+}
+
+if(command=='A')
+{ data="";
+com2=0;
+while(1)
+{
+if (Serial.available()>0)
+{ 
+value=Serial.read();
+
+// Serial.println ("value = ");
+//Serial.println (value);
+if (isDigit(value))
+{
+data = data + value;
+//Serial.println ("data = ");
+//Serial.println (data);
+com2=data.toInt();
+} 
+else if(value == ';') 
+break;
+}
+}
+angle(com2);
+goto C;
+//Serial.println ("El bytbe3et = ");
+//Serial.println (com2);
+//command="";
+}
+
+if(command=='Z')
+{
+infinity();
+stop_car();
+delay(2000);
+
+Rectangle();
+stop_car();
+delay(2000);
+
+Circle();
+stop_car();
+delay(2000);
+
+}
+//Serial.println(command);
+delay (1000);
+C: command="";
+
+}
