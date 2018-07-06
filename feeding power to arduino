@@ -1,0 +1,9 @@
+Feeding power to Arduino
+Arduino boards can use the serial USB to provide the power source when connected to a computer directly, like the UNO and the MEGA
+But if we want to use them when disconnected from the computer and/or in standalone mode we need another form of providing power to them.
+At first, We used Small rectangular 9V batteries which were not sufficient power sources. They have a very small current load capability. They are specifically designed for low-current long-term draw.
+So they discharged quickly and the slightest decrease in the voltage caused a disturbance to the car's performance
+We began using a power bank as a power source to the Arduino as it provided constant power (constant current to the Arduino) for a long period of time.
+One of its advantages is that it's rechargeable unlike the 9 volt batteries 
+USB power banks normally use a form of LiPO batteries known as 18650. And these power banks have an all in one board that allows charging through USB, keep the batteries safe above their ratting discharge voltage, and a step-up or step down converter to 5V provided on another USB port
+We used Dynex Portable Power Charger DX-2601 which also has the advantage of a small physical dimensions and weight in order to facilitate the car's movement  
